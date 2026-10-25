@@ -5,7 +5,7 @@ export const uploadApi = {
   async upload(file: File): Promise<UploadedFile> {
     const form = new FormData()
     form.append('file', file)
-    const { data } = await http.post<UploadedFile>('/upload', form)
+    const { data } = await http.post<UploadedFile>('/upload', form, { timeout: 0 })
     return data
   },
 }

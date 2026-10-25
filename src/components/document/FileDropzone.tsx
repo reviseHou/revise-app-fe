@@ -50,7 +50,7 @@ export default function FileDropzone({ file, currentFileName, invalid, onChange 
           {currentFileName && <p className={styles.current}>Tệp hiện tại: {currentFileName}</p>}
         </>
       )}
-      <p className={styles.hint}>Định dạng PDF, DOCX, PPTX · Tối đa 10 MB</p>
+      <p className={styles.hint}>Định dạng PDF, DOC, DOCX, PPT, PPTX</p>
       <div className={styles.buttons}>
         <button type="button" className={styles.pick} onClick={() => inputRef.current?.click()}>
           {file ? 'Chọn tệp khác' : 'Chọn tệp'}

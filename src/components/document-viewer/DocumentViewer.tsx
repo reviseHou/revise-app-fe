@@ -22,7 +22,7 @@ export default function DocumentViewer({ document }: { document: DocumentItem })
       <div className={styles.toolbar}>
         <span>{document.mediaType ?? label}</span>
         {url && (
-          <a href={url} target="_blank" rel="noreferrer" className={styles.open}>
+          <a href={viewerSource(url, extension)} target="_blank" rel="noreferrer" className={styles.open}>
             Mở tab mới
             <Icon name="external" size={16} />
           </a>

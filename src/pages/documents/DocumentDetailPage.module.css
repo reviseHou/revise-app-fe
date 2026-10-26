@@ -1,3 +1,11 @@
+.footerBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 48px;
+}
+
 .actionBar {
   display: flex;
   justify-content: flex-end;
@@ -98,6 +106,11 @@
 }
 
 @media (max-width: 640px) {
+  .footerBar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .actionBar {
     justify-content: flex-start;
     gap: 8px 24px;

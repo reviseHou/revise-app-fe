@@ -8,6 +8,7 @@ import PageHeader from '../../components/common/PageHeader'
 import StateView from '../../components/common/StateView'
 import CommentSection from '../../components/document/CommentSection'
 import SaveButton from '../../components/document/SaveButton'
+import StarRating from '../../components/document/StarRating'
 import { useRequest } from '../../hooks/useRequest'
 import { useSavedToggle } from '../../hooks/useSaved'
 import { PATHS } from '../../routes/paths'
@@ -69,6 +70,7 @@ export default function QuizDetailPage() {
               { icon: 'user', label: `${quiz.attemptCount} lượt làm` },
             ]}
             actions={<SaveButton saved={saved} onToggle={toggle} />}
+            footer={<StarRating sourceType="QUIZ" sourceId={quiz.id} />}
           />
 
           <Container width="wide" className={styles.page}>

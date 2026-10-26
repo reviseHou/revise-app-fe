@@ -7,10 +7,13 @@ import Icon from '../../components/common/Icon'
 import PageHeader from '../../components/common/PageHeader'
 import StateView from '../../components/common/StateView'
 import StatusBadge from '../../components/common/StatusBadge'
+import CategoryTag from '../../components/document/CategoryTag'
 import CommentSection from '../../components/document/CommentSection'
 import DocumentCard from '../../components/document/DocumentCard'
+import StarRating from '../../components/document/StarRating'
 import DocumentViewer from '../../components/document-viewer/DocumentViewer'
 import { useAuth } from '../../hooks/useAuth'
+import { useDocumentView } from '../../hooks/useDocumentView'
 import { useRequest } from '../../hooks/useRequest'
 import { useSavedToggle } from '../../hooks/useSaved'
 import { PATHS } from '../../routes/paths'
@@ -32,6 +35,7 @@ export default function DocumentDetailPage() {
   const { data, loading, error, reload } = useRequest(() => loadDetail(documentId), `document-${documentId}`)
   const document = data?.document
   const { saved, toggle } = useSavedToggle('DOCUMENT', document ? Number(document.id) : undefined)
+  const viewCount = useDocumentView(document ? Number(document.id) : undefined, document?.viewCount)
   const [liked, setLiked] = useState(false)
   const isOwner = !!document && document.uploader?.id === user?.id
 
@@ -56,9 +60,11 @@ export default function DocumentDetailPage() {
               ...(document.subject ? [{ icon: 'graduation-cap' as const, label: document.subject.name }] : []),
               { icon: 'calendar', label: formatDate(document.dateCreated) },
               ...(document.uploader ? [{ icon: 'student' as const, label: document.uploader.fullName }] : []),
+              ...(viewCount !== undefined ? [{ icon: 'eye' as const, label: `${viewCount} lượt xem` }] : []),
             ]}
             actions={
               <>
+                <CategoryTag category={document.category} />
                 {document.status !== 'ACTIVE' && <StatusBadge status={document.status} />}
                 {isOwner && (
                   <Button variant="outline" size="sm" to={PATHS.documentEdit(document.id)}>
@@ -68,33 +74,36 @@ export default function DocumentDetailPage() {
               </>
             }
             footer={
-              <div className={styles.actionBar}>
-                <button
-                  type="button"
-                  className={liked ? `${styles.action} ${styles.liked}` : styles.action}
-                  onClick={() => setLiked((prev) => !prev)}
-                  aria-pressed={liked}
-                >
-                  {liked ? <img src={likeFilled} alt="" width={16} height={14} /> : <Icon name="heart" size={16} />}
-                  {liked ? 'Đã thích' : 'Thích'}
-                </button>
-                <button type="button" className={styles.action} onClick={scrollToComments}>
-                  <Icon name="comment" />
-                  Bình luận
-                </button>
-                <button
-                  type="button"
-                  className={saved ? `${styles.action} ${styles.saved}` : styles.action}
-                  onClick={toggle}
-                  aria-pressed={saved}
-                >
-                  <Icon name="bookmark" size={16} />
-                  {saved ? 'Đã lưu' : 'Lưu'}
-                </button>
-                <button type="button" className={styles.action} disabled title="Tính năng đang phát triển">
-                  <Icon name="flag" />
-                  Báo cáo
-                </button>
+              <div className={styles.footerBar}>
+                <StarRating sourceType="DOCUMENT" sourceId={Number(document.id)} />
+                <div className={styles.actionBar}>
+                  <button
+                    type="button"
+                    className={liked ? `${styles.action} ${styles.liked}` : styles.action}
+                    onClick={() => setLiked((prev) => !prev)}
+                    aria-pressed={liked}
+                  >
+                    {liked ? <img src={likeFilled} alt="" width={16} height={14} /> : <Icon name="heart" size={16} />}
+                    {liked ? 'Đã thích' : 'Thích'}
+                  </button>
+                  <button type="button" className={styles.action} onClick={scrollToComments}>
+                    <Icon name="comment" />
+                    Bình luận
+                  </button>
+                  <button
+                    type="button"
+                    className={saved ? `${styles.action} ${styles.saved}` : styles.action}
+                    onClick={toggle}
+                    aria-pressed={saved}
+                  >
+                    <Icon name="bookmark" size={16} />
+                    {saved ? 'Đã lưu' : 'Lưu'}
+                  </button>
+                  <button type="button" className={styles.action} disabled title="Tính năng đang phát triển">
+                    <Icon name="flag" />
+                    Báo cáo
+                  </button>
+                </div>
               </div>
             }
           />

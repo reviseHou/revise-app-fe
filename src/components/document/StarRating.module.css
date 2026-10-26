@@ -1,0 +1,58 @@
+.root {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--color-text-muted);
+}
+
+.stars {
+  display: inline-flex;
+  align-items: center;
+}
+
+.star {
+  display: inline-flex;
+  padding: 2px;
+  color: var(--color-border-strong);
+  transition:
+    color 0.15s,
+    transform 0.15s;
+}
+
+.star svg {
+  fill: currentColor;
+}
+
+.star:not(:disabled):hover {
+  transform: scale(1.12);
+}
+
+.star:disabled {
+  cursor: default;
+}
+
+.filled {
+  color: var(--color-warning);
+}
+
+.summary {
+  white-space: nowrap;
+}
+
+.link {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  text-decoration: underline;
+}
+
+.link:not(:disabled):hover {
+  color: var(--color-danger);
+}
+
+.error {
+  flex-basis: 100%;
+  color: var(--color-danger);
+}

@@ -1,5 +1,9 @@
 export type DocumentStatus = 'PENDING' | 'ACTIVE' | 'REJECTED' | 'INACTIVE'
 
+export type DocumentCategory = 'SLIDE' | 'OUTLINE' | 'TEXTBOOK' | 'EXERCISE' | 'EXAM' | 'OTHER'
+
+export type DocumentSort = 'newest' | 'oldest' | 'views'
+
 type ActiveStatus = 'ACTIVE' | 'INACTIVE'
 
 export interface Faculty {
@@ -40,11 +44,13 @@ export interface DocumentItem {
   year?: number | null
   filePath?: string | null
   mediaType?: string | null
+  category: DocumentCategory
   status: DocumentStatus
   rejectReason?: string | null
   dateCreated: string
   subject?: Subject | null
   uploader?: DocumentUploader | null
+  viewCount?: number
 }
 
 export interface DocumentPayload {
@@ -53,6 +59,7 @@ export interface DocumentPayload {
   year?: number
   filePath?: string
   mediaType?: string
+  category: DocumentCategory
   subjectId: number
 }
 

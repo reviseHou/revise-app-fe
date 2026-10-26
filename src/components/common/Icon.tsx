@@ -27,6 +27,7 @@ export type IconName =
   | 'comment'
   | 'document-sm'
   | 'external'
+  | 'eye'
   | 'flag'
   | 'folder-sm'
   | 'graduation-cap'

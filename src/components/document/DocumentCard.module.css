@@ -27,6 +27,12 @@
   border-bottom: 1px solid var(--color-border);
 }
 
+.category {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
 .cover {
   width: 100%;
   height: 100%;
@@ -82,6 +88,13 @@
 .compact .thumb img[width] {
   width: 44px;
   height: 44px;
+}
+
+.compact .category {
+  top: 8px;
+  right: 8px;
+  height: 20px;
+  padding: 0 8px;
 }
 
 .compact .title {

@@ -4,6 +4,7 @@ import { PATHS } from '../../routes/paths'
 import type { DocumentItem } from '../../types/document'
 import { formatDate, isImageUrl } from '../../utils/format'
 import Icon from '../common/Icon'
+import CategoryTag from './CategoryTag'
 import SavedMark from './SavedMark'
 import styles from './DocumentCard.module.css'
 
@@ -25,6 +26,7 @@ export default function DocumentCard({ document, saved, compact }: DocumentCardP
           <img src={documentIcon} alt="" width={64} height={64} />
         )}
         {saved && <SavedMark />}
+        <CategoryTag category={document.category} className={styles.category} />
       </div>
       <div className={styles.body}>
         <h3 className={styles.title}>{document.title}</h3>
@@ -39,6 +41,12 @@ export default function DocumentCard({ document, saved, compact }: DocumentCardP
             <Icon name="calendar" />
             {formatDate(document.dateCreated)}
           </span>
+          {document.viewCount !== undefined && (
+            <span className={styles.metaItem}>
+              <Icon name="eye" size={16} />
+              {document.viewCount} lượt xem
+            </span>
+          )}
         </div>
       </div>
     </Link>

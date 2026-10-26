@@ -64,6 +64,18 @@
   border-color: var(--color-danger);
 }
 
+.select {
+  cursor: pointer;
+}
+
+.select:invalid {
+  color: var(--color-text-subtle);
+}
+
+.select option {
+  color: var(--color-text);
+}
+
 .textarea {
   height: auto;
   min-height: 128px;

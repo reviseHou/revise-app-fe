@@ -31,3 +31,12 @@ export function isImageUrl(url?: string | null): boolean {
 export function matches(keyword: string, ...values: (string | null | undefined)[]) {
   return values.some((value) => value?.toLowerCase().includes(keyword))
 }
+
+const ratingFormatter = new Intl.NumberFormat('vi-VN', {
+  minimumFractionDigits: 1,
+  maximumFractionDigits: 1,
+})
+
+export function formatRating(value: number): string {
+  return ratingFormatter.format(value)
+}

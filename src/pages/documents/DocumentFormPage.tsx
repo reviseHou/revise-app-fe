@@ -10,6 +10,7 @@ import Modal from '../../components/common/Modal'
 import StateView from '../../components/common/StateView'
 import SubjectSelect from '../../components/common/SubjectSelect'
 import FileDropzone from '../../components/document/FileDropzone'
+import { CATEGORY_LABELS, DOCUMENT_CATEGORIES } from '../../components/document/documentCategories'
 import { fileError } from '../../components/document/fileRules'
 import { useAuth } from '../../hooks/useAuth'
 import { useRequest } from '../../hooks/useRequest'
@@ -17,7 +18,7 @@ import { PATHS } from '../../routes/paths'
 import { documentApi } from '../../services/api/documentApi'
 import { subjectApi } from '../../services/api/subjectApi'
 import { uploadApi } from '../../services/api/uploadApi'
-import type { DocumentItem, DocumentPayload, Subject } from '../../types/document'
+import type { DocumentCategory, DocumentItem, DocumentPayload, Subject } from '../../types/document'
 import styles from './DocumentFormPage.module.css'
 
 const documentSchema = (requireFile: boolean) =>
@@ -25,6 +26,10 @@ const documentSchema = (requireFile: boolean) =>
     .object({
       title: z.string().trim().min(1, 'Vui lòng nhập tên tài liệu.'),
       subjectId: z.string().min(1, 'Vui lòng chọn môn học.'),
+      category: z.string().refine(
+        (value) => DOCUMENT_CATEGORIES.includes(value as DocumentCategory),
+        'Vui lòng chọn loại tài liệu.',
+      ),
       year: z
         .string()
         .trim()
@@ -48,6 +53,7 @@ function valuesFrom(document?: DocumentItem, presetSubjectId = ''): FormValues {
   return {
     title: document?.title ?? '',
     subjectId: document?.subject ? String(document.subject.id) : presetSubjectId,
+    category: document?.category ?? '',
     year: document?.year ? String(document.year) : '',
     description: document?.description ?? '',
     file: null,
@@ -66,6 +72,7 @@ function buildPayload(
     description,
     year: values.year ? Number(values.year) : undefined,
     subjectId: Number(values.subjectId),
+    category: values.category as DocumentCategory,
     filePath: uploaded?.url ?? previous?.filePath ?? undefined,
     mediaType: uploaded?.type ?? previous?.mediaType ?? undefined,
   }
@@ -152,6 +159,26 @@ function DocumentForm({ subjects, existing }: DocumentFormProps) {
               )}
             />
             {errors.subjectId && <p className={styles.error}>{errors.subjectId.message}</p>}
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="doc-category">Loại tài liệu *</label>
+            <select
+              id="doc-category"
+              className={[styles.control, styles.select, errors.category && styles.invalid].filter(Boolean).join(' ')}
+              aria-invalid={!!errors.category}
+              {...register('category')}
+            >
+              <option value="" disabled>
+                Chọn loại tài liệu
+              </option>
+              {DOCUMENT_CATEGORIES.map((category) => (
+                <option key={category} value={category}>
+                  {CATEGORY_LABELS[category]}
+                </option>
+              ))}
+            </select>
+            {errors.category && <p className={styles.error}>{errors.category.message}</p>}
           </div>
 
           <div className={styles.field}>

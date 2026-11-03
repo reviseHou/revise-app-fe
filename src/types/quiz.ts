@@ -40,7 +40,8 @@ export interface AttemptQuestion extends QuizQuestion {
 export interface Attempt {
   id: number
   status: AttemptStatus
-  expiresAt: string
+  startedAt: string
+  now: string
   totalQuestion: number
   totalCorrect?: number | null
   totalWrong?: number | null
@@ -92,5 +93,6 @@ export interface QuizContext {
   subjectId: number
   estimateMinute: number
   questions: QuizQuestionContext[]
+  status?: QuizStatus
   attemptCount?: number
 }

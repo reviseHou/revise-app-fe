@@ -3,6 +3,7 @@ import documentIcon from '../../assets/images/document-lg.svg'
 import { PATHS } from '../../routes/paths'
 import type { DocumentItem } from '../../types/document'
 import { formatDate } from '../../utils/format'
+import { isEditableStatus } from '../../utils/reviewStatus'
 import Button from '../common/Button'
 import Icon from '../common/Icon'
 import StatusBadge from '../common/StatusBadge'
@@ -78,9 +79,11 @@ export default function DocumentRow({ document, onDelete }: DocumentRowProps) {
           )}
         </div>
         <div className={styles.buttons}>
-          <Button variant="outline" size="sm" to={PATHS.documentEdit(document.id)} className={styles.edit}>
-            Chỉnh sửa
-          </Button>
+          {isEditableStatus(document.status) && (
+            <Button variant="outline" size="sm" to={PATHS.documentEdit(document.id)} className={styles.edit}>
+              Chỉnh sửa
+            </Button>
+          )}
           <Button variant="muted" size="sm" to={PATHS.documentDetail(document.id)}>
             Xem chi tiết
           </Button>

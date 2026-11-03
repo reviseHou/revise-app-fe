@@ -1,6 +1,6 @@
 import { useRef, useState, type DragEvent } from 'react'
 import Icon from '../common/Icon'
-import { ACCEPTED_EXTENSIONS } from './fileRules'
+import { ACCEPTED_EXTENSIONS, MAX_FILE_MB } from './fileRules'
 import styles from './FileDropzone.module.css'
 
 interface FileDropzoneProps {
@@ -50,7 +50,7 @@ export default function FileDropzone({ file, currentFileName, invalid, onChange 
           {currentFileName && <p className={styles.current}>Tệp hiện tại: {currentFileName}</p>}
         </>
       )}
-      <p className={styles.hint}>Định dạng PDF, DOC, DOCX, PPT, PPTX</p>
+      <p className={styles.hint}>Định dạng PDF, DOC, DOCX, PPT, PPTX, tối đa {MAX_FILE_MB}MB</p>
       <div className={styles.buttons}>
         <button type="button" className={styles.pick} onClick={() => inputRef.current?.click()}>
           {file ? 'Chọn tệp khác' : 'Chọn tệp'}

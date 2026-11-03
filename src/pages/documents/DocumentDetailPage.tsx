@@ -19,6 +19,7 @@ import { useSavedToggle } from '../../hooks/useSaved'
 import { PATHS } from '../../routes/paths'
 import { documentApi } from '../../services/api/documentApi'
 import { formatDate } from '../../utils/format'
+import { isEditableStatus } from '../../utils/reviewStatus'
 import styles from './DocumentDetailPage.module.css'
 
 const RELATED_LIMIT = 6
@@ -66,7 +67,7 @@ export default function DocumentDetailPage() {
               <>
                 <CategoryTag category={document.category} />
                 {document.status !== 'ACTIVE' && <StatusBadge status={document.status} />}
-                {isOwner && (
+                {isOwner && isEditableStatus(document.status) && (
                   <Button variant="outline" size="sm" to={PATHS.documentEdit(document.id)}>
                     Chỉnh sửa
                   </Button>

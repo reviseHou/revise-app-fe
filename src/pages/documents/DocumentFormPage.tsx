@@ -18,6 +18,7 @@ import { PATHS } from '../../routes/paths'
 import { documentApi } from '../../services/api/documentApi'
 import { subjectApi } from '../../services/api/subjectApi'
 import { uploadApi } from '../../services/api/uploadApi'
+import { isEditableStatus } from '../../utils/reviewStatus'
 import type { DocumentCategory, DocumentItem, DocumentPayload, Subject } from '../../types/document'
 import styles from './DocumentFormPage.module.css'
 
@@ -294,6 +295,7 @@ export default function DocumentFormPage({ mode }: { mode: 'create' | 'update' }
   const existing = useRequest(() => documentApi.get(documentId), `document-form-${documentId}`, isUpdate)
 
   const isForeign = isUpdate && !!existing.data && existing.data.uploader?.id !== user?.id
+  const isApproved = isUpdate && !!existing.data && !isEditableStatus(existing.data.status)
 
   return (
     <Container width="narrow">
@@ -304,8 +306,12 @@ export default function DocumentFormPage({ mode }: { mode: 'create' | 'update' }
           subjects.reload()
           existing.reload()
         }}
-        empty={isForeign}
-        emptyText="Bạn chỉ có thể chỉnh sửa tài liệu do mình tải lên."
+        empty={isForeign || isApproved}
+        emptyText={
+          isForeign
+            ? 'Bạn chỉ có thể chỉnh sửa tài liệu do mình tải lên.'
+            : 'Tài liệu đã được duyệt nên không thể chỉnh sửa. Bạn có thể xóa và tải lên lại.'
+        }
       >
         <DocumentForm key={existing.data?.id ?? 'new'} subjects={subjects.data ?? []} existing={existing.data} />
       </StateView>

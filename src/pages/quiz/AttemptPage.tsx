@@ -22,8 +22,14 @@ function selectionsOf(attempt: Attempt): Selections {
   return Object.fromEntries(attempt.questions.map((question) => [question.id, question.selectedAnswerId]))
 }
 
-function secondsUntil(iso: string) {
-  return Math.max(0, Math.round((new Date(iso).getTime() - Date.now()) / 1000))
+// Server sends startedAt + its own now; shift by the clock offset so a wrong device clock doesn't matter.
+function deadlineOf(attempt: Attempt) {
+  const offset = Date.now() - new Date(attempt.now).getTime()
+  return new Date(attempt.startedAt).getTime() + attempt.quiz.estimateMinute * 60_000 + offset
+}
+
+function secondsUntil(deadline: number) {
+  return Math.max(0, Math.round((deadline - Date.now()) / 1000))
 }
 
 function pageOf(attempt: Attempt, questionId: number) {
@@ -176,7 +182,8 @@ function AttemptRunner({ attempt, onSubmitted }: { attempt: Attempt; onSubmitted
   const [selections, setSelections] = useState<Selections>(() => selectionsOf(attempt))
   const [dirty, setDirty] = useState<Set<number>>(() => new Set())
   const [page, setPage] = useState(0)
-  const [remaining, setRemaining] = useState(() => secondsUntil(attempt.expiresAt))
+  const [deadline] = useState(() => deadlineOf(attempt))
+  const [remaining, setRemaining] = useState(() => secondsUntil(deadline))
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [confirming, setConfirming] = useState(false)
@@ -186,6 +193,9 @@ function AttemptRunner({ attempt, onSubmitted }: { attempt: Attempt; onSubmitted
 
   const pendingAnswers = (): AnswerSelection[] =>
     [...dirty].map((questionId) => ({ questionId, answerId: selections[questionId] ?? null }))
+
+  const allAnswers = (): AnswerSelection[] =>
+    attempt.questions.map((question) => ({ questionId: question.id, answerId: selections[question.id] ?? null }))
 
   const choose = (questionId: number, answerId: number) => {
     setSelections((prev) => ({ ...prev, [questionId]: answerId }))
@@ -221,7 +231,7 @@ function AttemptRunner({ attempt, onSubmitted }: { attempt: Attempt; onSubmitted
     setBusy(true)
     setError('')
     try {
-      onSubmitted(await quizApi.submit(attempt.id, pendingAnswers()))
+      onSubmitted(await quizApi.submit(attempt.id, allAnswers()))
     } catch {
       setError('Nộp bài không thành công, vui lòng thử lại.')
       submittingRef.current = false
@@ -236,7 +246,7 @@ function AttemptRunner({ attempt, onSubmitted }: { attempt: Attempt; onSubmitted
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      const left = secondsUntil(attempt.expiresAt)
+      const left = secondsUntil(deadline)
       setRemaining(left)
       if (left === 0) {
         window.clearInterval(timer)
@@ -244,7 +254,7 @@ function AttemptRunner({ attempt, onSubmitted }: { attempt: Attempt; onSubmitted
       }
     }, 1000)
     return () => window.clearInterval(timer)
-  }, [attempt.expiresAt])
+  }, [deadline])
 
   useEffect(() => {
     if (dirty.size === 0) return

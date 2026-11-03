@@ -29,6 +29,7 @@ import {
   type InfoErrors,
   type QuizDraft,
 } from './quizDraft'
+import { isEditableStatus } from '../../utils/reviewStatus'
 import styles from './QuizFormPage.module.css'
 
 type Step = 0 | 1 | 2
@@ -558,7 +559,8 @@ export default function QuizFormPage({ mode }: { mode: 'create' | 'update' }) {
   const isUpdate = mode === 'update'
   const subjects = useRequest(subjectApi.list, 'subjects')
   const context = useRequest(() => quizApi.getContext(quizId), `quiz-context-${quizId}`, isUpdate)
-  const locked = isUpdate && (context.data?.attemptCount ?? 0) > 0
+  const locked =
+    isUpdate && !!context.data && !isEditableStatus(context.data.status)
 
   const initial = isUpdate ? context.data && draftFromContext(context.data) : (loadStoredDraft() ?? emptyDraft())
 
@@ -582,7 +584,7 @@ export default function QuizFormPage({ mode }: { mode: 'create' | 'update' }) {
             context.reload()
           }}
           empty={locked || !initial}
-          emptyText="Bài kiểm tra đã có người làm nên không sửa được. Hãy tạo bài mới."
+          emptyText="Bài kiểm tra đã được duyệt nên không thể chỉnh sửa. Bạn có thể xóa và tạo bài mới."
         >
           {initial && (
             <div className={styles.page}>

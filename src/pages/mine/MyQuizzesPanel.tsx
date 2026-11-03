@@ -10,6 +10,7 @@ import { PATHS } from '../../routes/paths'
 import { quizApi } from '../../services/api/quizApi'
 import type { MyQuiz, QuizStatus } from '../../types/quiz'
 import { formatDate } from '../../utils/format'
+import { isEditableStatus } from '../../utils/reviewStatus'
 import styles from './MyQuizzesPanel.module.css'
 
 type Tab = 'ALL' | Exclude<QuizStatus, 'INACTIVE'>
@@ -77,7 +78,7 @@ export default function MyQuizzesPanel() {
         >
           <ul className={styles.list}>
             {quizzes.map((quiz) => {
-              const locked = quiz.attemptCount > 0
+              const locked = !isEditableStatus(quiz.status)
               return (
                 <li key={quiz.id} className={styles.row}>
                   <img src={quizIcon} alt="" width={44} height={47} className={styles.icon} />

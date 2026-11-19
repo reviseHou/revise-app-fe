@@ -92,7 +92,7 @@ export default function QuizDetailPage() {
                   </li>
                   <li>
                     <Icon name="list" size={18} />
-                    {quiz.totalQuestion} câu, mỗi trang {QUESTIONS_PER_PAGE} câu. Đáp án được lưu khi bấm “Tiếp theo”.
+                    {quiz.totalQuestion} câu, mỗi trang {QUESTIONS_PER_PAGE} câu. Đáp án được lưu tự động ngay khi bạn chọn.
                   </li>
                   <li>
                     <Icon name="check-circle" size={18} />

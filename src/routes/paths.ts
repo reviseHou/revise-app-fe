@@ -19,4 +19,12 @@ export const PATHS = {
   attempt: (attemptId: number | string) => `/attempts/${attemptId}`,
   saved: '/saved',
   settings: '/settings',
+  help: '/help',
+} as const
+
+export const HELP_SECTIONS = {
+  guide: 'huong-dan',
+  contact: 'lien-he',
+  terms: 'dieu-khoan',
+  privacy: 'bao-mat',
 } as const

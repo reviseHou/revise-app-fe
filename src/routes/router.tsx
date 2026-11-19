@@ -7,6 +7,7 @@ import SearchPage from '../pages/documents/SearchPage'
 import SubjectDocumentsPage from '../pages/documents/SubjectDocumentsPage'
 import SubjectPickerPage from '../pages/documents/SubjectPickerPage'
 import NotFoundPage from '../pages/errors/NotFoundPage'
+import HelpPage from '../pages/help/HelpPage'
 import MinePage from '../pages/mine/MinePage'
 import HomePage from '../pages/home/HomePage'
 import AttemptPage from '../pages/quiz/AttemptPage'
@@ -44,6 +45,7 @@ export const router = createBrowserRouter([
           { path: PATHS.attempt(':attemptId'), element: <AttemptPage /> },
           { path: PATHS.saved, element: <SavedPage /> },
           { path: PATHS.settings, element: <SettingsPage /> },
+          { path: PATHS.help, element: <HelpPage /> },
           { path: '*', element: <NotFoundPage /> },
         ],
       },

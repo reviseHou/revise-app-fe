@@ -177,7 +177,8 @@
   gap: 12px;
   max-height: 460px;
   overflow-y: auto;
-  padding-bottom: 24px;
+  /* chừa chỗ cho viền "câu đang chọn" (outline) để không bị vùng cuộn cắt mất */
+  padding: 4px 4px 24px;
 }
 
 .gridItem {
@@ -302,5 +303,59 @@
   .answerRow > .markCorrect,
   .answerRow > .markWrong {
     right: 12px;
+  }
+}
+
+/* Điện thoại: khung làm bài thành thanh gọn dính dưới header để luôn thấy đồng hồ và bảng câu khi cuộn */
+@media (max-width: 640px) {
+  .panel:has(.timer) {
+    position: sticky;
+    top: var(--header-height);
+    z-index: 5;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 12px;
+    padding: 8px 12px 10px;
+  }
+
+  .panel:has(.timer) .panelTitle,
+  .panel:has(.timer) .divider {
+    display: none;
+  }
+
+  .panel:has(.timer) .grid {
+    flex: 1 1 100%;
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 40px;
+    justify-content: start;
+    gap: 8px;
+    max-height: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px;
+  }
+
+  .panel:has(.timer) .gridItem {
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .panel:has(.timer) > button {
+    width: auto;
+    flex: 0 0 auto;
+    order: 2;
+  }
+
+  .panel:has(.timer) .timer {
+    order: 1;
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  .panel:has(.timer) .timer strong {
+    font-size: 18px;
   }
 }

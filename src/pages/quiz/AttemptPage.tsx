@@ -197,9 +197,28 @@ function AttemptRunner({ attempt, onSubmitted }: { attempt: Attempt; onSubmitted
   const allAnswers = (): AnswerSelection[] =>
     attempt.questions.map((question) => ({ questionId: question.id, answerId: selections[question.id] ?? null }))
 
+  // Lưu đáp án lên máy chủ ngay khi chọn để tải lại trang / đóng máy không mất bài làm.
+  // Các lần lưu chạy nối tiếp để máy chủ luôn nhận lựa chọn mới nhất sau cùng.
+  const saveChainRef = useRef<Promise<void>>(Promise.resolve())
+  const latestRef = useRef<Selections>({})
+
   const choose = (questionId: number, answerId: number) => {
     setSelections((prev) => ({ ...prev, [questionId]: answerId }))
     setDirty((prev) => new Set(prev).add(questionId))
+    latestRef.current[questionId] = answerId
+    saveChainRef.current = saveChainRef.current
+      .then(() => quizApi.saveAnswers(attempt.id, [{ questionId, answerId }]))
+      .then(() => {
+        // chỉ bỏ cờ "chưa lưu" nếu trong lúc gửi người dùng không đổi sang đáp án khác
+        if (latestRef.current[questionId] !== answerId) return
+        setDirty((prev) => {
+          const next = new Set(prev)
+          next.delete(questionId)
+          return next
+        })
+      })
+      // lỗi mạng: giữ cờ "chưa lưu", đáp án sẽ được gửi lại khi chuyển trang hoặc nộp bài
+      .catch(() => undefined)
   }
 
   const goTo = async (nextPage: number, focusQuestion?: number) => {

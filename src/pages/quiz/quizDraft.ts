@@ -49,10 +49,8 @@ export function newQuestion(): DraftQuestion {
     key: newKey(),
     title: '',
     explanation: '',
-    answers: [newAnswer(), newAnswer(), newAnswer(), newAnswer()].map((answer, index) => ({
-      ...answer,
-      isCorrect: index === 0,
-    })),
+    // Không chọn sẵn đáp án đúng: người soạn phải tự chọn, validateQuestion báo lỗi nếu quên.
+    answers: [newAnswer(), newAnswer(), newAnswer(), newAnswer()],
   }
 }
 

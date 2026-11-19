@@ -112,3 +112,19 @@
     gap: 2px;
   }
 }
+
+@media (max-width: 480px) {
+  .inner {
+    gap: 8px;
+    padding: 0 12px;
+  }
+
+  .logo {
+    height: 26px;
+  }
+
+  .iconButton {
+    width: 36px;
+    height: 36px;
+  }
+}

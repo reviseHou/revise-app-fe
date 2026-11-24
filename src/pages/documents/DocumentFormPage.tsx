@@ -25,7 +25,7 @@ import styles from './DocumentFormPage.module.css'
 const documentSchema = (requireFile: boolean) =>
   z
     .object({
-      title: z.string().trim().min(1, 'Vui lòng nhập tên tài liệu.'),
+      title: z.string().trim().min(1, 'Vui lòng nhập tên tài liệu.').max(255, 'Tên tài liệu tối đa 255 ký tự.'),
       subjectId: z.string().min(1, 'Vui lòng chọn môn học.'),
       category: z.string().refine(
         (value) => DOCUMENT_CATEGORIES.includes(value as DocumentCategory),
@@ -38,7 +38,7 @@ const documentSchema = (requireFile: boolean) =>
           (value) => value === '' || (/^\d{4}$/.test(value) && Number(value) >= 1900 && Number(value) <= 2100),
           'Năm không hợp lệ.',
         ),
-      description: z.string(),
+      description: z.string().trim().max(2000, 'Mô tả tối đa 2000 ký tự.'),
       file: z.instanceof(File).nullable(),
     })
     .superRefine((values, context) => {
@@ -200,10 +200,12 @@ function DocumentForm({ subjects, existing }: DocumentFormProps) {
             <label htmlFor="doc-description">Mô tả tài liệu</label>
             <textarea
               id="doc-description"
-              className={`${styles.control} ${styles.textarea}`}
+              className={[styles.control, styles.textarea, errors.description && styles.invalid].filter(Boolean).join(' ')}
               rows={5}
+              aria-invalid={!!errors.description}
               {...register('description')}
             />
+            {errors.description && <p className={styles.error}>{errors.description.message}</p>}
           </div>
         </section>
 

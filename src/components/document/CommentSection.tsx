@@ -79,6 +79,7 @@ interface CommentProps {
 
 function Comment({ comment, rootId, replyingTo, onReply, onCreateReply, onDelete }: CommentProps) {
   const { user } = useAuth()
+  const [liked, setLiked] = useState(false)
   const isOwner = user?.id === comment.user.id
   const nested = comment.parentId !== null
 
@@ -107,6 +108,15 @@ function Comment({ comment, rootId, replyingTo, onReply, onCreateReply, onDelete
                 Xóa
               </button>
             )}
+            <button
+              type="button"
+              className={liked ? `${styles.like} ${styles.liked}` : styles.like}
+              onClick={() => setLiked((prev) => !prev)}
+              aria-label="Thích bình luận"
+              aria-pressed={liked}
+            >
+              <Icon name="heart" size={16} />
+            </button>
           </div>
         )}
         {replyingTo === comment.id && (

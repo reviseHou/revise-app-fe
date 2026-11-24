@@ -39,6 +39,9 @@ export default function Header({ showSearch, menuOpen, onToggleMenu, onCloseMenu
         <div className={styles.actions}>
           {showSearch && <SearchBox className={styles.search} />}
           <ThemeToggle />
+          <button type="button" className={styles.iconButton} disabled aria-label="Thông báo" title="Tính năng đang phát triển">
+            <Icon name="bell" />
+          </button>
           <Link to={PATHS.saved} className={styles.iconButton} aria-label="Danh sách đã lưu" title="Danh sách đã lưu">
             <Icon name="bookmark" />
           </Link>

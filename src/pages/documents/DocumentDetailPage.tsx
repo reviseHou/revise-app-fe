@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import likeFilled from '../../assets/images/like-filled.svg'
 import Button from '../../components/common/Button'
 import Container from '../../components/common/Container'
 import Icon from '../../components/common/Icon'
@@ -35,6 +37,7 @@ export default function DocumentDetailPage() {
   const document = data?.document
   const { saved, toggle } = useSavedToggle('DOCUMENT', document ? Number(document.id) : undefined)
   const viewCount = useDocumentView(document ? Number(document.id) : undefined, document?.viewCount)
+  const [liked, setLiked] = useState(false)
   const isOwner = !!document && document.uploader?.id === user?.id
 
   const scrollToComments = () => globalThis.document.getElementById('comments')?.scrollIntoView({ behavior: 'smooth' })
@@ -76,6 +79,15 @@ export default function DocumentDetailPage() {
               <div className={styles.footerBar}>
                 <StarRating sourceType="DOCUMENT" sourceId={Number(document.id)} />
                 <div className={styles.actionBar}>
+                  <button
+                    type="button"
+                    className={liked ? `${styles.action} ${styles.liked}` : styles.action}
+                    onClick={() => setLiked((prev) => !prev)}
+                    aria-pressed={liked}
+                  >
+                    {liked ? <img src={likeFilled} alt="" width={16} height={14} /> : <Icon name="heart" size={16} />}
+                    {liked ? 'Đã thích' : 'Thích'}
+                  </button>
                   <button type="button" className={styles.action} onClick={scrollToComments}>
                     <Icon name="comment" />
                     Bình luận
@@ -88,6 +100,10 @@ export default function DocumentDetailPage() {
                   >
                     <Icon name="bookmark" size={16} />
                     {saved ? 'Đã lưu' : 'Lưu'}
+                  </button>
+                  <button type="button" className={styles.action} disabled title="Tính năng đang phát triển">
+                    <Icon name="flag" />
+                    Báo cáo
                   </button>
                 </div>
               </div>

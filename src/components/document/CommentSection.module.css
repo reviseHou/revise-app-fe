@@ -137,6 +137,17 @@
   gap: 16px;
 }
 
+.like {
+  display: inline-flex;
+  margin-left: auto;
+  color: var(--color-text-muted);
+}
+
+.like:hover,
+.liked {
+  color: var(--color-danger);
+}
+
 .mention {
   color: var(--color-primary);
   font-weight: 500;

@@ -26,14 +26,6 @@
   color: var(--color-primary);
 }
 
-.action:disabled {
-  opacity: 0.5;
-}
-
-.liked {
-  color: var(--color-success-strong);
-}
-
 .saved {
   color: var(--color-primary);
 }

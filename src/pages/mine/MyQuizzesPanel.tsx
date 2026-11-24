@@ -157,7 +157,7 @@ export default function MyQuizzesPanel() {
           </>
         }
       >
-        Bài “{pendingDelete?.name}” sẽ bị ẩn khỏi danh sách và người khác không làm được nữa.
+        Bài “{pendingDelete?.name}” và toàn bộ lịch sử làm bài sẽ bị xóa vĩnh viễn, không thể khôi phục.
         {deleteError && <p className={styles.error}>{deleteError}</p>}
       </Modal>
     </>

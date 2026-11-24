@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { useCallback } from 'react'
 
-export function useRequest<T>(fetcher: () => Promise<T>, key: string, enabled = true) {
-  const query = useQuery({ queryKey: [key], queryFn: fetcher, enabled })
+export function useRequest<T>(fetcher: () => Promise<T>, key: string, enabled = true, gcTime?: number) {
+  const query = useQuery({ queryKey: [key], queryFn: fetcher, enabled, gcTime })
   const { refetch } = query
 
   const reload = useCallback(() => {

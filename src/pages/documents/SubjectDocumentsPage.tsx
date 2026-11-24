@@ -11,6 +11,7 @@ import StateView from '../../components/common/StateView'
 import DocumentCard from '../../components/document/DocumentCard'
 import { CATEGORY_LABELS, DOCUMENT_CATEGORIES } from '../../components/document/documentCategories'
 import { usePaged } from '../../hooks/usePaged'
+import { useRequest } from '../../hooks/useRequest'
 import { useSubjectWith } from '../../hooks/useSubjectWith'
 import { PATHS } from '../../routes/paths'
 import { documentApi } from '../../services/api/documentApi'
@@ -30,20 +31,35 @@ const CATEGORY_OPTIONS = [
   ...DOCUMENT_CATEGORIES.map((category) => ({ value: category, label: CATEGORY_LABELS[category] })),
 ]
 
+const ALL_YEARS = 'ALL'
+
 const PAGE_SIZE = 12
 
 export default function SubjectDocumentsPage() {
   const subjectId = Number(useParams().subjectId)
   const [category, setCategory] = useState<CategoryFilter>('ALL')
   const [sort, setSort] = useState<DocumentSort>('newest')
+  const [year, setYear] = useState(ALL_YEARS)
   const { data, loading, error, reload } = useSubjectWith(
     subjectId,
-    (id) => documentApi.listApprovedBySubject(id, category === 'ALL' ? undefined : category, sort),
-    `subject-documents-${category}-${sort}`,
+    (id) =>
+      documentApi.listApprovedBySubject(
+        id,
+        category === 'ALL' ? undefined : category,
+        sort,
+        year === ALL_YEARS ? undefined : year,
+      ),
+    `subject-documents-${category}-${sort}-${year}`,
   )
+  const allDocuments = useRequest(() => documentApi.listApprovedBySubject(subjectId), `subject-years-${subjectId}`)
   const subject = data?.subject
 
   const documents = data?.items ?? []
+  const years = [...new Set((allDocuments.data ?? []).flatMap((document) => document.year ?? []))].sort((a, b) => b - a)
+  const yearOptions = [
+    { value: ALL_YEARS, label: 'Tất cả' },
+    ...years.map((value) => ({ value: String(value), label: String(value) })),
+  ]
   const paged = usePaged(documents, PAGE_SIZE)
 
   return (
@@ -77,6 +93,7 @@ export default function SubjectDocumentsPage() {
         <div className={styles.toolbar}>
           <SelectMenu label="Sắp xếp" value={sort} options={SORT_OPTIONS} onChange={setSort} />
           <SelectMenu label="Loại tài liệu" value={category} options={CATEGORY_OPTIONS} onChange={setCategory} />
+          <SelectMenu label="Năm" value={year} options={yearOptions} onChange={setYear} />
         </div>
         <StateView
           loading={loading}
@@ -86,9 +103,9 @@ export default function SubjectDocumentsPage() {
           emptyText={
             !subject
               ? 'Không tìm thấy môn học.'
-              : category === 'ALL'
+              : category === 'ALL' && year === ALL_YEARS
                 ? 'Môn học này chưa có tài liệu nào được duyệt.'
-                : 'Môn học này chưa có tài liệu thuộc loại đã chọn.'
+                : 'Môn học này chưa có tài liệu phù hợp với bộ lọc.'
           }
         >
           <CardGrid page={paged.page} totalPages={paged.totalPages} onPageChange={paged.setPage}>

@@ -434,7 +434,7 @@ function AttemptResult({ attempt }: { attempt: Attempt }) {
 
 export default function AttemptPage() {
   const attemptId = Number(useParams().attemptId)
-  const request = useRequest(() => quizApi.getAttempt(attemptId), `attempt-${attemptId}`)
+  const request = useRequest(() => quizApi.getAttempt(attemptId), `attempt-${attemptId}`, true, 0)
   const [result, setResult] = useState<Attempt>()
   const attempt = result?.id === attemptId ? result : request.data
 

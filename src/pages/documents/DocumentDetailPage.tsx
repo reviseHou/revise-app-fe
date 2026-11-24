@@ -59,6 +59,7 @@ export default function DocumentDetailPage() {
             title={document.title}
             meta={[
               ...(document.subject ? [{ icon: 'graduation-cap' as const, label: document.subject.name }] : []),
+              ...(document.year ? [{ icon: 'document-sm' as const, label: `Năm ${document.year}` }] : []),
               { icon: 'calendar', label: formatDate(document.dateCreated) },
               ...(document.uploader ? [{ icon: 'student' as const, label: document.uploader.fullName }] : []),
               ...(viewCount !== undefined ? [{ icon: 'eye' as const, label: `${viewCount} lượt xem` }] : []),

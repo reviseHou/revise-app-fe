@@ -16,8 +16,9 @@ export const documentApi = {
     subjectId: number,
     category?: DocumentCategory,
     sort?: DocumentSort,
+    year?: string,
   ): Promise<DocumentItem[]> {
-    const { data } = await http.get<DocumentItem[]>(`/documents/subject/${subjectId}`, { params: { category, sort } })
+    const { data } = await http.get<DocumentItem[]>(`/documents/subject/${subjectId}`, { params: { category, sort, year } })
     return data
   },
 

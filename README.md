@@ -1,4 +1,4 @@
-# ReviseHOU – Frontend
+# Revise HOU – Frontend
 
 Web cho sinh viên ôn tập: thư viện tài liệu theo khoa – ngành – môn, đăng tài liệu, tạo và làm bài kiểm tra. Dựng bằng **React 19 + TypeScript + Vite**.
 

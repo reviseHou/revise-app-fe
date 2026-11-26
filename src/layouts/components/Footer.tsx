@@ -26,7 +26,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <p className={styles.copyright}>© 2026 Revise Hou · All rights reserved</p>
+      <p className={styles.copyright}>© 2026 Revise HOU · All rights reserved</p>
     </footer>
   )
 }

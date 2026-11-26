@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import folder from '../../assets/images/folder-lg.svg'
 import Button from '../../components/common/Button'
@@ -48,7 +49,8 @@ export default function SubjectPickerPage({ target }: { target: Target }) {
 
   const facultyId = params.get('faculty') ?? ALL
   const majorId = params.get('major') ?? ALL
-  const keyword = (params.get('q') ?? '').trim().toLowerCase()
+  const [query, setQuery] = useState(params.get('q') ?? '')
+  const keyword = query.trim().toLowerCase()
   const faculty = tree.find((item) => String(item.id) === facultyId)
   const majorsInScope = faculty ? faculty.majors : tree.flatMap((item) => item.majors)
   const selectedMajor = majorsInScope.find((item) => String(item.id) === majorId)
@@ -120,8 +122,11 @@ export default function SubjectPickerPage({ target }: { target: Target }) {
             className={styles.filter}
             type="search"
             placeholder="Lọc theo tên hoặc mã môn"
-            value={params.get('q') ?? ''}
-            onChange={(event) => updateParams({ q: event.target.value })}
+            value={query}
+            onChange={(event) => {
+              setQuery(event.target.value)
+              updateParams({ q: event.target.value })
+            }}
           />
         </div>
 

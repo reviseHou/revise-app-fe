@@ -74,7 +74,7 @@ export default function HomePage() {
               nhớ <em>mãi mãi.</em>
             </h1>
             <p className={`${styles.heroText} ${styles.reveal}`}>
-              Nơi sinh viên Đại học Mở Hà Nội ôn tập cùng nhau: tài liệu đã kiểm duyệt theo từng môn và bài kiểm tra
+              Nơi sinh viên Trường Đại học Mở Hà Nội ôn tập cùng nhau: tài liệu đã kiểm duyệt theo từng môn và bài kiểm tra
               chấm điểm ngay.
             </p>
             <div className={`${styles.heroSearch} ${styles.reveal}`}>

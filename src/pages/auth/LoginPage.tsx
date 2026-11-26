@@ -38,7 +38,7 @@ export default function LoginPage() {
           <img src={logo} alt="Revise HOU" width={221} height={40} className={styles.logo} />
           <section className={styles.card} aria-labelledby="login-title">
             <h1 id="login-title" className={styles.cardTitle}>
-              Chào mừng bạn đến với Revise Hou
+              Chào mừng bạn đến với Revise HOU
             </h1>
             <p className={styles.cardText}>Đăng nhập bằng tài khoản email của trường để tiếp tục.</p>
             {error && (
@@ -60,7 +60,7 @@ export default function LoginPage() {
             nhớ <em>mãi mãi</em>
           </h2>
           <p className={styles.heroText}>
-            Hệ thống ôn tập thông minh dành cho sinh viên Đại học Mở Hà Nội – giúp bạn ghi nhớ kiến thức bền vững, đơn
+            Hệ thống ôn tập thông minh dành cho sinh viên Trường Đại học Mở Hà Nội – giúp bạn ghi nhớ kiến thức bền vững, đơn
             giản và hiệu quả.
           </p>
           <ul className={styles.highlights}>

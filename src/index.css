@@ -39,8 +39,8 @@
   --radius-pill: 9999px;
 
   --font-sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
-  --font-button: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
-  --font-display: 'Playfair Display', Georgia, serif;
+  --font-button: var(--font-sans);
+  --font-display: var(--font-sans);
 
   --header-height: 72px;
   --page-max: 1280px;

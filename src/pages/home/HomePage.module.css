@@ -1,10 +1,8 @@
 .page {
-  --serif: 'Playfair Display', Georgia, serif;
-  --sans: 'Be Vietnam Pro', var(--font-sans);
   --ink: #0b1f33;
   --navy: #002f53;
   --sky: #7cc0f2;
-  font-family: var(--sans);
+  font-family: var(--font-sans);
   color: var(--color-text);
 }
 
@@ -59,7 +57,7 @@
 }
 
 .heroTitle {
-  font-family: var(--serif);
+  font-family: var(--font-sans);
   font-size: clamp(44px, 5.4vw, 76px);
   line-height: 1.02;
   font-weight: 400;
@@ -159,7 +157,7 @@
   border-radius: 12px;
   background: var(--color-primary);
   color: #ffffff !important;
-  font-family: var(--serif);
+  font-family: var(--font-sans);
   font-size: 16px;
   font-weight: 600;
 }
@@ -202,7 +200,7 @@
 }
 
 .sectionTitle {
-  font-family: var(--serif);
+  font-family: var(--font-sans);
   font-size: clamp(28px, 2.6vw, 38px);
   line-height: 1.15;
   font-weight: 600;
@@ -258,7 +256,7 @@
   position: absolute;
   top: 12px;
   right: 22px;
-  font-family: var(--serif);
+  font-family: var(--font-sans);
   font-size: 64px;
   line-height: 1;
   font-style: italic;
@@ -360,7 +358,7 @@
 }
 
 .faculty h3 {
-  font-family: var(--serif);
+  font-family: var(--font-sans);
   font-size: 26px;
   line-height: 1.2;
   font-weight: 600;
@@ -468,7 +466,7 @@
   border-radius: 50%;
   background: var(--color-primary);
   color: #ffffff;
-  font-family: var(--serif);
+  font-family: var(--font-sans);
   font-size: 20px;
   font-weight: 600;
   box-shadow: 0 0 0 6px var(--color-surface);
@@ -502,7 +500,7 @@
 }
 
 .ctaTitle {
-  font-family: var(--serif);
+  font-family: var(--font-sans);
   font-size: clamp(28px, 2.8vw, 40px);
   line-height: 1.15;
   font-weight: 600;

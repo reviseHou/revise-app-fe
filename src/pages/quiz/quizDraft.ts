@@ -49,7 +49,6 @@ export function newQuestion(): DraftQuestion {
     key: newKey(),
     title: '',
     explanation: '',
-    // Không chọn sẵn đáp án đúng: người soạn phải tự chọn, validateQuestion báo lỗi nếu quên.
     answers: [newAnswer(), newAnswer(), newAnswer(), newAnswer()],
   }
 }

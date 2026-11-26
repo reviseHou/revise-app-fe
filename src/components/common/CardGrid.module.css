@@ -23,7 +23,6 @@
     gap: 16px 12px;
   }
 
-  /* thẻ tài liệu / bài kiểm tra có width cố định 216px: cho giãn theo ô lưới trên điện thoại */
   .panel .grid > * {
     width: 100%;
     min-width: 0;

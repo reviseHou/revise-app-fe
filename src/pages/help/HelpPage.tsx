@@ -53,7 +53,6 @@ export default function HelpPage() {
           Nếu gặp lỗi hoặc có câu hỏi về việc duyệt tài liệu, bài kiểm tra, hãy liên hệ giảng viên phụ trách khoa của bạn
           hoặc quản trị viên hệ thống Revise HOU.
         </p>
-        {/* TODO: bổ sung email / kênh liên hệ chính thức của nhóm quản trị */}
       </section>
 
       <section id={HELP_SECTIONS.terms} className={styles.card}>

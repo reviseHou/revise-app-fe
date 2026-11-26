@@ -177,7 +177,6 @@
   gap: 12px;
   max-height: 460px;
   overflow-y: auto;
-  /* chừa chỗ cho viền "câu đang chọn" (outline) để không bị vùng cuộn cắt mất */
   padding: 4px 4px 24px;
 }
 
@@ -306,7 +305,6 @@
   }
 }
 
-/* Điện thoại: khung làm bài thành thanh gọn dính dưới header để luôn thấy đồng hồ và bảng câu khi cuộn */
 @media (max-width: 640px) {
   .panel:has(.timer) {
     position: sticky;
